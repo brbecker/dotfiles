@@ -1,0 +1,86 @@
+[core]
+    # autocrlf: Use input for Linux, true on Windows
+	autocrlf = true
+    editor = code --wait
+    excludesfile = ~/.config/git/.gitignore
+
+[checkout]
+    defaultRemote = origin
+
+[pull]
+    ff = yes
+
+# Most of the user configuration set via the includeIfs below
+[user]
+    # Don't let git guess user.name or user.email
+    useConfigOnly = true
+
+[diff]
+    tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+[merge]
+    ff = no
+    tool = code
+[mergetool "code"]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+
+### 
+# Temporarily hard code this here since I can't get conditional includes
+# working for some reason.
+###
+
+[user]
+    name = Becker, Brian
+    email = Brian.Becker@blueshieldca.com
+
+[core]
+    hooksPath = ~/.config/git/hooks-bsc
+
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+###
+# Conditional include stuff. Keep at end so they can override anything set above.
+###
+
+# Work vs. personal (user settings)
+# [includeIf "gitdir/i:projects/personal/"]
+#     path = config.personal
+# [includeIf "gitdir/i:projects/work/"]
+#     path = config.work
+
+# # OS-type specific
+# [includeIf "gitdir:C:"]
+#     path = config.windows
+# [includeIf "gitdir:/home"]
+#     path = config.linux
+
+# Configs for personal repos
+[includeIf "gitdir:~/repos/"]
+    path = ~/.config/git/brb.gitconfig
+[includeIf "gitdir:~/repos/brb/"]
+    path = ~/.config/git/brb.gitconfig
+# [includeIf "gitdir:Documents/Projects/personal/"]
+#     path = ~/Documents/Projects/personal/.gitconfig
+# [includeIf "gitdir:Projects/personal/"]
+#     path = ~/.config/git/brb.gitconfig
+
+# Configs for work repos (overrides above)
+[includeIf "gitdir:~/repos/bsc/"]
+    path = ~/.config/git/bsc.gitconfig
+[includeIf "gitdir:~/repos/stellarus/"]
+    path = ~/.config/git/stellarus.gitconfig
+[includeIf "gitdir:/c/Users/bbecke01/repos/stellarus/"]
+    path = /c/Users/bbecke01/.config/git/stellarus.gitconfig
+[includeIf "gitdir:C:/Users/bbecke01/repos/stellarus/"]
+    path = C:/Users/bbecke01/.config/git/stellarus.gitconfig
+# [includeIf "gitdir:~/Documents/Projects/work/"]
+#     path = ~/Documents/Projects/work/.gitconfig
+# [includeIf "gitdir:~/Projects/work/"]
+#     path = ~/Projects/work/.gitconfig
+
+# OS-specific configs
+[includeIf "gitdir:C:"]
+    path = ~/.config/git/windows.gitconfig
+[includeIf "gitdir:/home"]
+    path = ~/.config/git/linux.gitconfig
