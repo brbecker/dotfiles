@@ -1,3 +1,17 @@
+# Force all github.com HTTPS URLs to SSH
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+# Personal github account
+[url "git@brbecker-github:brbecker/"]
+    insteadOf = git@github.com:brbecker/
+    insteadOf = https://github.com/brbecker/
+
+# MyCompany org
+# [url "git@mycompany-github:MyCompany/"]
+#     insteadOf = git@github.com:MyCompany/
+#     insteadOf = https://github.com/MyCompany/
+
 [core]
     # autocrlf: Use input for Linux, true on Windows
 	autocrlf = true
@@ -34,11 +48,13 @@
 [user]
     name = Becker, Brian
     email = Brian.Becker@blueshieldca.com
+    # name = Brian R. Becker
+    # email = brbecker@gmail.com
 
 [core]
     hooksPath = ~/.config/git/hooks-bsc
 
-	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+	# sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 ###
 # Conditional include stuff. Keep at end so they can override anything set above.
 ###
@@ -55,11 +71,15 @@
 # [includeIf "gitdir:/home"]
 #     path = config.linux
 
-# Configs for personal repos
-[includeIf "gitdir:~/repos/"]
-    path = ~/.config/git/brb.gitconfig
-[includeIf "gitdir:~/repos/brb/"]
-    path = ~/.config/git/brb.gitconfig
+# Configs for personal github repos
+[includeIf "hasconfig:remote.*.url:git@github.com:brbecker/**"]
+    path = ~/.config/git/brbecker-github.gitconfig
+[includeIf "hasconfig:remote.*.url:https://github.com/brbecker/**"]
+    path = ~/.config/git/brbecker-github.gitconfig
+# [includeIf "gitdir:~/repos/"]
+#     path = ~/.config/git/brb.gitconfig
+# [includeIf "gitdir:~/repos/brb/"]
+#     path = ~/.config/git/brb.gitconfig
 # [includeIf "gitdir:Documents/Projects/personal/"]
 #     path = ~/Documents/Projects/personal/.gitconfig
 # [includeIf "gitdir:Projects/personal/"]

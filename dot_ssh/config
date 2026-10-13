@@ -1,0 +1,5 @@
+# Personal github account
+Host brbecker-github
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519.brbecker-github.20261012
