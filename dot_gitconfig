@@ -14,7 +14,7 @@
 
 [core]
     # autocrlf: Use input for Linux, true on Windows
-	autocrlf = true
+    autocrlf = true
     editor = code --wait
     excludesfile = ~/.config/git/.gitignore
 
@@ -40,6 +40,16 @@
 [mergetool "code"]
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
+[credential]
+    helper = manager
+# From WSL2 Ubuntu
+# [credential "https://github.com"]
+#     helper = 
+#     helper = !/snap/gh/751/gh auth git-credential
+# [credential "https://gist.github.com"]
+#     helper = 
+#     helper = !/snap/gh/751/gh auth git-credential
+
 ### 
 # Temporarily hard code this here since I can't get conditional includes
 # working for some reason.
@@ -47,16 +57,18 @@
 
 [user]
     name = Becker, Brian
-    email = Brian.Becker@blueshieldca.com
+    email = Brian.Becker@stellarus.com
     # name = Brian R. Becker
     # email = brbecker@gmail.com
 
 [core]
     hooksPath = ~/.config/git/hooks-bsc
 
-	# sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+    # sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
 ###
-# Conditional include stuff. Keep at end so they can override anything set above.
+# Conditional include stuff. Keep at end so they can override anything set
+# above. NOTE: the remote.*.url conditionals ignore the "insteadOf" rewrites
+# defined earlier.
 ###
 
 # Work vs. personal (user settings)
@@ -76,14 +88,6 @@
     path = ~/.config/git/brbecker-github.gitconfig
 [includeIf "hasconfig:remote.*.url:https://github.com/brbecker/**"]
     path = ~/.config/git/brbecker-github.gitconfig
-# [includeIf "gitdir:~/repos/"]
-#     path = ~/.config/git/brb.gitconfig
-# [includeIf "gitdir:~/repos/brb/"]
-#     path = ~/.config/git/brb.gitconfig
-# [includeIf "gitdir:Documents/Projects/personal/"]
-#     path = ~/Documents/Projects/personal/.gitconfig
-# [includeIf "gitdir:Projects/personal/"]
-#     path = ~/.config/git/brb.gitconfig
 
 # Configs for work repos (overrides above)
 [includeIf "gitdir:~/repos/bsc/"]
