@@ -12,6 +12,14 @@
 #     insteadOf = git@github.com:MyCompany/
 #     insteadOf = https://github.com/MyCompany/
 
+# Force https for Bitbucket URLs
+[url "https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/blueshieldca/"]
+    insteadOf = git@bitbucket.org:blueshieldca/
+    # insteadOf = https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva
+[url "https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva/"]
+    insteadOf = git@bitbucket.org:user-hjzhufb4qvafrylxwyrqva/
+    # insteadOf = https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva
+
 [core]
     # autocrlf: Use input for Linux, true on Windows
     autocrlf = true
@@ -55,9 +63,9 @@
 # working for some reason.
 ###
 
-[user]
-    name = Becker, Brian
-    email = Brian.Becker@stellarus.com
+# [user]
+    # name = Becker, Brian
+    # email = Brian.Becker@stellarus.com
     # name = Brian R. Becker
     # email = brbecker@gmail.com
 
@@ -83,25 +91,27 @@
 # [includeIf "gitdir:/home"]
 #     path = config.linux
 
+# NOTE: The remote.*.url conditionals ignore the "insteadOf" rewrites defined
+# earlier, so we have to use the original URL here, not the rewritten one.
+
+# Configs for work Bitbucket repos (in the https URL, note the username is mixed
+# case, but the path is lowercase)
+[includeIf "hasconfig:remote.*.url:git@bitbucket.org:blueshieldca/**"]
+    path = ~/.config/git/stellarus.gitconfig
+[includeIf "hasconfig:remote.*.url:https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/blueshieldca/**"]
+    path = ~/.config/git/stellarus.gitconfig
+[includeIf "hasconfig:remote.*.url:git@bitbucket.org:user-hjzhufb4qvafrylxwyrqva/**"]
+    path = ~/.config/git/stellarus.gitconfig
+[includeIf "hasconfig:remote.*.url:https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva/**"]
+    path = ~/.config/git/stellarus.gitconfig
+
 # Configs for personal github repos
+[includeIf "hasconfig:remote.*.url:git@brbecker-github:brbecker/**"]
+    path = ~/.config/git/brbecker-github.gitconfig
 [includeIf "hasconfig:remote.*.url:git@github.com:brbecker/**"]
     path = ~/.config/git/brbecker-github.gitconfig
 [includeIf "hasconfig:remote.*.url:https://github.com/brbecker/**"]
     path = ~/.config/git/brbecker-github.gitconfig
-
-# Configs for work repos (overrides above)
-[includeIf "gitdir:~/repos/bsc/"]
-    path = ~/.config/git/bsc.gitconfig
-[includeIf "gitdir:~/repos/stellarus/"]
-    path = ~/.config/git/stellarus.gitconfig
-[includeIf "gitdir:/c/Users/bbecke01/repos/stellarus/"]
-    path = /c/Users/bbecke01/.config/git/stellarus.gitconfig
-[includeIf "gitdir:C:/Users/bbecke01/repos/stellarus/"]
-    path = C:/Users/bbecke01/.config/git/stellarus.gitconfig
-# [includeIf "gitdir:~/Documents/Projects/work/"]
-#     path = ~/Documents/Projects/work/.gitconfig
-# [includeIf "gitdir:~/Projects/work/"]
-#     path = ~/Projects/work/.gitconfig
 
 # OS-specific configs
 [includeIf "gitdir:C:"]

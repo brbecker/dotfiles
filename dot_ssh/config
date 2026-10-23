@@ -1,5 +1,25 @@
+Host bitbucket.org
+  HostName bitbucket.org
+  User git
+  PreferredAuthentications publickey
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519.bsc_bitbucket_2023-02-03
+
+# Host bitbucket-bsc
+#   HostName bitbucket.org
+#   User git
+#   IdentityFile C:/Users/bbecke01/.ssh/id_ed25519.bsc_bitbucket_2023-02-03
+#   IdentitiesOnly yes
+
 # Personal github account
 Host brbecker-github
   HostName github.com
   User git
   IdentityFile ~/.ssh/id_ed25519.brbecker-github.20261012
+
+# Personal work Bitbucket account
+Host bbecke01-bitbucket
+  HostName bitbucket.org
+  User git
+  IdentityFile ~/.ssh/id_ed25519.git_2018-01-30

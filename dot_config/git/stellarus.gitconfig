@@ -1,0 +1,6 @@
+[user]
+    name = Becker, Brian
+    email = Brian.Becker@stellarus.com
+
+[core]
+    hooksPath = ~/.config/git/hooks-stellarus
