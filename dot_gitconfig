@@ -1,25 +1,4 @@
 # Force all github.com HTTPS URLs to SSH
-[url "git@github.com:"]
-    insteadOf = https://github.com/
-
-# Personal github account
-[url "git@brbecker-github:brbecker/"]
-    insteadOf = git@github.com:brbecker/
-    insteadOf = https://github.com/brbecker/
-
-# MyCompany org
-# [url "git@mycompany-github:MyCompany/"]
-#     insteadOf = git@github.com:MyCompany/
-#     insteadOf = https://github.com/MyCompany/
-
-# Force https for Bitbucket URLs
-[url "https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/blueshieldca/"]
-    insteadOf = git@bitbucket.org:blueshieldca/
-    # insteadOf = https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva
-[url "https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva/"]
-    insteadOf = git@bitbucket.org:user-hjzhufb4qvafrylxwyrqva/
-    # insteadOf = https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva
-
 [core]
     # autocrlf: Use input for Linux, true on Windows
     autocrlf = true
@@ -29,13 +8,15 @@
 [checkout]
     defaultRemote = origin
 
-[pull]
-    ff = yes
-
-# Most of the user configuration set via the includeIfs below
-[user]
-    # Don't let git guess user.name or user.email
-    useConfigOnly = true
+[credential]
+    helper = manager
+# From WSL2 Ubuntu
+# [credential "https://github.com"]
+#     helper = 
+#     helper = !/snap/gh/751/gh auth git-credential
+# [credential "https://gist.github.com"]
+#     helper = 
+#     helper = !/snap/gh/751/gh auth git-credential
 
 [diff]
     tool = vscode
@@ -48,51 +29,36 @@
 [mergetool "code"]
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
-[credential]
-    helper = manager
-# From WSL2 Ubuntu
-# [credential "https://github.com"]
-#     helper = 
-#     helper = !/snap/gh/751/gh auth git-credential
-# [credential "https://gist.github.com"]
-#     helper = 
-#     helper = !/snap/gh/751/gh auth git-credential
+[pull]
+    ff = yes
 
-### 
-# Temporarily hard code this here since I can't get conditional includes
-# working for some reason.
-###
+[url "git@github.com:"]
+    insteadOf = https://github.com/
 
-# [user]
-    # name = Becker, Brian
-    # email = Brian.Becker@stellarus.com
-    # name = Brian R. Becker
-    # email = brbecker@gmail.com
+# Personal github account
+[url "git@brbecker-github:brbecker/"]
+    insteadOf = git@github.com:brbecker/
+    insteadOf = https://github.com/brbecker/
 
-[core]
-    hooksPath = ~/.config/git/hooks-bsc
+# Force https for Bitbucket URLs
+[url "https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/blueshieldca/"]
+    insteadOf = git@bitbucket.org:blueshieldca/
+    # insteadOf = https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva
+[url "https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva/"]
+    insteadOf = git@bitbucket.org:user-hjzhufb4qvafrylxwyrqva/
+    # insteadOf = https://user-hjzHUfB4QVaFRYlxwYRqvA@bitbucket.org/user-hjzhufb4qvafrylxwyrqva
 
-    # sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
-###
-# Conditional include stuff. Keep at end so they can override anything set
+# Most of the user configuration set via the includeIfs below
+[user]
+    # Don't let git guess user.name or user.email
+    useConfigOnly = true
+
+###  
+# Conditional include stuff. KEEP AT END so they can override anything set
 # above. NOTE: the remote.*.url conditionals ignore the "insteadOf" rewrites
-# defined earlier.
+# defined earlier, so we have to use the original URL here, not the rewritten
+# one.
 ###
-
-# Work vs. personal (user settings)
-# [includeIf "gitdir/i:projects/personal/"]
-#     path = config.personal
-# [includeIf "gitdir/i:projects/work/"]
-#     path = config.work
-
-# # OS-type specific
-# [includeIf "gitdir:C:"]
-#     path = config.windows
-# [includeIf "gitdir:/home"]
-#     path = config.linux
-
-# NOTE: The remote.*.url conditionals ignore the "insteadOf" rewrites defined
-# earlier, so we have to use the original URL here, not the rewritten one.
 
 # Configs for work Bitbucket repos (in the https URL, note the username is mixed
 # case, but the path is lowercase)
