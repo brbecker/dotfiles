@@ -1,3 +1,24 @@
+# Global defaults
+Host *
+  # Server keep alive messages
+  ServerAliveCountMax=3
+  ServerAliveInterval=15
+
+  # Forwarding SSH Agent can constitute a security issue if the remote host is
+  # compromised. Try not to use it.
+  # ForwardAgent    yes
+
+  # This setting will eliminate the remote banner, but allow normal errors.
+  LogLevel        error
+
+  # Enable SSH multiplexing.
+  # Needed for VSC SSH Agent support?
+  # ControlMaster auto
+  # ControlPath  ~/.ssh/sockets/%r@%h-%p
+  # ControlPersist  600
+
+##### Host specific entries here
+
 Host bitbucket.org
   HostName bitbucket.org
   User git
@@ -12,14 +33,121 @@ Host bitbucket.org
 #   IdentityFile C:/Users/bbecke01/.ssh/id_ed25519.bsc_bitbucket_2023-02-03
 #   IdentitiesOnly yes
 
+# Personal work Bitbucket account
+Host bbecke01-bitbucket
+  HostName bitbucket.org
+  User git
+  IdentityFile ~/.ssh/id_ed25519.git_2018-01-30
+
 # Personal github account
 Host brbecker-github
   HostName github.com
   User git
   IdentityFile ~/.ssh/id_ed25519.brbecker-github.20261012
 
-# Personal work Bitbucket account
-Host bbecke01-bitbucket
-  HostName bitbucket.org
-  User git
-  IdentityFile ~/.ssh/id_ed25519.git_2018-01-30
+# Host github.com
+#   IdentityFile /home/bbecke01/.ssh/id_ed25519.github_BSCWL306830
+
+# Host lfclass-cp cp
+#     HostName a.b.c.d
+#     IdentityFile ~/.ssh/lfclass-20261005.pem
+#     User ubuntu
+# Host lfclass-wk worker
+#     HostName a.b.c.d
+#     IdentityFile ~/.ssh/lfclass-20261005.pem
+#     User ubuntu
+
+#############################
+# BSC specific host entries #
+#############################
+
+Host *vio*
+    User            padmin
+
+Host ee-build
+    Hostname uapp5718n
+
+# My VMs
+Host uinf5614n
+    User bbecke01
+
+Host brbtest
+    Hostname uinf3763n
+    User     bbecke01
+
+Host uinf9690t
+    User            bbecke01
+# ProxyJump not working with VSCode Remote - SSH
+#    ProxyJump       uinf9393p
+#ProxyCommand    "C:\Program Files\Git\usr\bin\ssh.exe" -q -W %h:%p uinf9393p
+
+# Forward agents from the jump hosts
+Host uinf9393p
+    ForwardAgent    yes
+Host uinf9394p
+    ForwardAgent    yes
+Host uinf901p
+    ForwardAgent    yes
+
+# New IPA host not in bsc.bscal.com
+Host uinf4862p new-ipa
+	Hostname uinf4862p.unix.bscal.com
+
+#Host uhmc401p-local
+#    Hostname        uhmc401p
+#    User            bbecke01-local
+
+# Real name of BlueCloud vRA appliance
+Host ainf101p
+    User            root
+Host bluecloud
+    User            root
+
+Host vrlcm uapl9032n uapl9033n uapl9034n uapl9035n uapl9044n
+    User            root
+
+# Access pn0001 as root from uinf9393p
+Host pn0001
+    Hostname        uinf9393p
+    RequestTTY      force
+    RemoteCommand   sudo bash -c "ssh pn0001"
+
+# Access uinf9003n (HIT Satellite) as root from uinf901p
+Host uinf9003n
+    Hostname        uinf901p
+    RequestTTY      force
+    RemoteCommand   sudo bash -c "ssh uinf9003n"
+
+# VRS2019 LCM
+Host uapl9044n uapl9047n vrlcm-dev uapl9153p vrslcm01 uapl9192p
+    User            root
+    PreferredAuthentications    keyboard-interactive,password
+    PubkeyAuthentication        no
+
+# VRS2019 IDM
+Host uapl9045n uapl9048n idm-dev uapl9193p vrsidm01
+    User            sshuser
+    PreferredAuthentications    keyboard-interactive,password
+    PubkeyAuthentication        no
+
+# VRA8
+Host vra8-sbx uapl9046n uapl9049n vra8-dev
+    # HostName        uapl9046n
+    User            root
+    PreferredAuthentications    keyboard-interactive,password
+    PubkeyAuthentication        no
+
+# vRA8 IAS SBX
+Host uapl9091n
+    Hostname        uapl9091n.dev.bscal.local
+    User            root
+    #PreferredAuthentications    keyboard-interactive,password
+    #PubkeyAuthentication        no
+
+# VRA8 DEV
+Host vradev uapl9189n uapl9190n uapl9191n uapl9194n
+    # HostName        uapl9046n
+    User            root
+    # PreferredAuthentications    keyboard-interactive,password
+    # PubkeyAuthentication        no
+
