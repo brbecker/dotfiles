@@ -33,11 +33,11 @@ Host bitbucket.org
 #   IdentityFile C:/Users/bbecke01/.ssh/id_ed25519.bsc_bitbucket_2023-02-03
 #   IdentitiesOnly yes
 
-# Personal work Bitbucket account
+# Work Bitbucket account
 Host bbecke01-bitbucket
-  HostName bitbucket.org
+  HostName ssh.bitbucket.org
   User git
-  IdentityFile ~/.ssh/id_ed25519.git_2018-01-30
+  IdentityFile ~/.ssh/id_ed25519.bsc_bitbucket_2023-02-03
 
 # Personal github account
 Host brbecker-github
@@ -150,4 +150,3 @@ Host vradev uapl9189n uapl9190n uapl9191n uapl9194n
     User            root
     # PreferredAuthentications    keyboard-interactive,password
     # PubkeyAuthentication        no
-
