@@ -1,0 +1,178 @@
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# shellcheck shell=sh
+
+# echo "In .profile"
+export PROFILE_LOADED=1
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# if running bash
+# if [ -n "${BASH_VERSION}" ]; then
+#     # include .bashrc if it exists
+#     if [ -f "${HOME}/.bashrc" ]; then
+#         # shellcheck source=.bashrc
+#         . "${HOME}/.bashrc"
+#     fi
+# fi
+
+# If we don't have an SSH_AUTH_SOCK at this point, probably a non-interactive
+# session (e.g VScode). Try forcing setup.
+# if [ -z "${SSH_AUTH_SOCK}" ]; then
+#     if [ -f "${HOME}/.ssh/wsl2-ssh-agent.sock" ]; then
+#         export SSH_AUTH_SOCK="${HOME}/.ssh/wsl2-ssh-agent.sock"
+#     fi
+# fi
+
+# Start wsl2-ssh-agent to connect to Windows ssh-agent. Keys populated from
+# KeePassXC.
+if [[ ( -n "${WSL_DISTRO_NAME}" ) && ( -x "${HOME}/.local/bin/wsl2-ssh-agent" ) ]]; then
+    eval "$("${HOME}"/.local/bin/wsl2-ssh-agent)"
+fi
+
+# NOTE: Only include if running ksh
+# Include .kshrc, if present
+# if [ -f ${HOME}/.kshrc ]; then
+#     export ENV=${HOME}/.kshrc
+# fi
+
+# # Strip leading, trailing and consecutive colons so we don't ever
+# # include the current directory in PATH. Try to avoid performing PATH
+# # lookups here.
+# if [ -n "${BASH_VERSION}" ]; then
+#     # shellcheck disable=3010,3028,3054
+#     while [[ "${PATH}" =~ (.*)::+(.*) ]]; do
+#         PATH=${BASH_REMATCH[1]}:${BASH_REMATCH[2]}
+#     done
+#     PATH=${PATH#:}
+#     PATH=${PATH%:}
+# else
+#     PATH=$(/usr/bin/echo "${PATH}" |
+#             /usr/bin/sed -e 's/:::*/:/g;s/^://;s/:$//')
+# fi
+
+# # Set PATH so it includes user's private directories if they exist.
+# # Directories are PREPENDED, so list in reverse of desired search order.
+# for dir in "${HOME}/bin" "${HOME}/.local/bin" "${HOME}/.local/sbin"; do
+#     if [ -d "${dir}" ]; then
+#         # If PATH is empty, DIRSEP should be empty string, otherwise colon.
+#         if [ -z "${PATH}" ]; then
+#             DIRSEP=""
+#         else
+#             DIRSEP=":"
+#         fi
+
+#         # Only add if not present already
+#         case ":${PATH}:" in
+#             *:${dir}:* )                               ;;
+#             *          ) PATH="${dir}${DIRSEP}${PATH}" ;;
+#         esac
+#     fi
+# done
+
+# # Set MANPATH so it includes users' private man directories if they exist.
+# # Directories are PREPENDED, so list in reverse of desired search order.
+# for dir in "${HOME}/share/man" "${HOME}/man" "${HOME}/.local/man"; do
+#     if [ -d "${dir}" ]; then
+#         # If MANPATH is empty, DIRSEP should be empty string, otherwise colon.
+#         if [ -z "${MANPATH}" ]; then
+#             DIRSEP=""
+#         else
+#             DIRSEP=":"
+#         fi
+
+#         # Only add if not present already
+#         case ":${MANPATH}:" in
+#             *:${dir}:* )                                     ;;
+#             *          ) MANPATH="${dir}${DIRSEP}${MANPATH}" ;;
+#         esac
+#     fi
+# done
+# MANPATH=${MANPATH#:}
+# MANPATH=${MANPATH%:}
+
+# # Set INFOPATH so it includes user's private info directories if they exist.
+# # Directories are PREPENDED, so list in reverse of desired search order.
+# # shellcheck disable=SC2066
+# for dir in "${HOME}/info"; do
+#     if [ -d "${dir}" ]; then
+#         # If INFOPATH is empty, DIRSEP should be empty string, otherwise colon.
+#         if [ -z "${INFOPATH}" ]; then
+#             DIRSEP=""
+#         else
+#             DIRSEP=":"
+#         fi
+
+#         # Only add if not present already
+#         case ":${INFOPATH}:" in
+#             *:${dir}:* )                                       ;;
+#             *          ) INFOPATH="${dir}${DIRSEP}${INFOPATH}" ;;
+#         esac
+#     fi
+# done
+# INFOPATH=${INFOPATH#:}
+# INFOPATH=${INFOPATH%:}
+
+# ssh-pageant - DEPRECATED
+# export GIT_SSH='/c/Program Files/PuTTY/plink.exe'
+# if [ -x /usr/bin/ssh-pageant ]; then
+#     eval $(/usr/bin/ssh-pageant -r -a "/tmp/.ssh-pageant-$USERNAME")
+# fi
+
+# On Windows, if Microsoft's OpenSSH client is installed, prefer it.
+contains() { case $2 in *"$1"*) true;; *) false;; esac; }
+if contains Windows "$OS"; then
+    __WIN_SSH_DIR="/c/Windows/System32/OpenSSH"
+    if [ -d "${__WIN_SSH_DIR}" ] && [ -x "${__WIN_SSH_DIR}/ssh.exe" ]; then
+        if ! contains "${__WIN_SSH_DIR}" "$(which ssh)"; then
+            PATH="${__WIN_SSH_DIR}:${PATH}"
+        fi
+    # else try ssh-pageant?
+    fi
+    unset __WIN_SSH_DIR
+fi
+
+# # Get short hostname
+# HST=`hostname`
+# HST=${HST%%.*}
+
+# # Set prompt
+# if [ `id -u` -ne 0 ]; then
+#     _PROMPT_CHAR="$"
+# else
+#     _PROMPT_CHAR="#"
+# fi
+# _LF="
+# "
+
+# case $TERM in
+#     xterm*)
+#         # Set up variables for ANSI codes. Can't seem to use octal for LF.
+#         _BEL=$(echo "\007")
+#         _ESC=$(echo "\033")
+#         PS1="${_LF}${_ESC}]0;${USER}@${HST} "'${PWD##${HOME}/}'"${_BEL}${_ESC}[32m${USER}@${HST} ${_ESC}[33m"'${PWD##${HOME}/}'"${_ESC}[0m${_LF}${_PROMPT_CHAR} "
+#         unset _BEL _ESC _LF
+#         ;;
+#     *)
+#         PS1="${_LF}${USER}@${HST} "'${PWD##${HOME}/}'"${_LF}${_PROMPT_CHAR} "
+#         ;;
+# esac
+
+# #unset _PROMPT_CHAR _LF
+
+# #touch ${HOME}/.hushlogin
+
+# stty erase ^?
+# set -o emacs
+# # umask 022
+
+# # Auto-logout after this number of seconds (30 minutes)
+# TMOUT=1800
+
+# export PATH MANPATH INFOPATH
