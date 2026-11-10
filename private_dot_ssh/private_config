@@ -20,7 +20,7 @@ Host *
 ##### Host specific entries here
 
 Host bitbucket.org
-  HostName bitbucket.org
+  HostName ssh.bitbucket.org
   User git
   PreferredAuthentications publickey
   IdentitiesOnly yes
@@ -37,12 +37,18 @@ Host bitbucket.org
 Host bbecke01-bitbucket
   HostName ssh.bitbucket.org
   User git
+  PreferredAuthentications publickey
+  IdentitiesOnly yes
+  AddKeysToAgent yes
   IdentityFile ~/.ssh/id_ed25519.bsc_bitbucket_2023-02-03
 
 # Personal github account
 Host brbecker-github
   HostName github.com
   User git
+  PreferredAuthentications publickey
+  IdentitiesOnly yes
+  AddKeysToAgent yes
   IdentityFile ~/.ssh/id_ed25519.brbecker-github.20261012
 
 # Host github.com
