@@ -1,8 +1,0 @@
-# Configuration for Windows
-
-[core]
-    # autocrlf: Use input for Linux, true on Windows
-    autocrlf = true
-
-[credential]
-    helper = manager
