@@ -30,9 +30,6 @@
 [pull]
     ff = yes
 
-[url "git@github.com:"]
-    insteadOf = https://github.com/
-
 # Personal github account
 [url "git@brbecker-github:brbecker/"]
     insteadOf = git@github.com:brbecker/
