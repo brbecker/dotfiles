@@ -1,7 +1,7 @@
 packages:
   darwin:
     brews:
-    - chezmoi
+    # - chezmoi
     - git
     casks:
     - keepassxc
