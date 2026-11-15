@@ -18,3 +18,11 @@
 
 3. Initialize chezmoi from my github dotfiles repo
   - `chezmoi init brbecker [--apply]`
+
+## WSL
+
+1. Install [chezmoi](https://www.chezmoi.io/)
+  - `sudo snap install chezmoi --classic`
+
+2. Initialize chezmoi from my github dotfiles repo
+  - `chezmoi init brbecker [--apply]`
