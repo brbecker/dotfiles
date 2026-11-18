@@ -1,14 +1,26 @@
 packages:
   darwin:
     brews: # CLI tools (brews, aka formulae)
-    # - chezmoi
-    - curl
-    - gh
-    - git
-    - jq
-    - tree
+      # - chezmoi
+      - curl
+      - gh
+      - git
+      - jq
+      - tree
     casks: # GUI apps (casks)
-    - ghostty
-    - keepassxc
-    - visual-studio-code
-    - webex
+      - ghostty
+      - keepassxc
+      - visual-studio-code
+      - webex
+  ubuntu:
+    apt: # apt packages
+      - curl
+      - git
+      - jq
+      - tree
+    snap:
+      classic: # snap packages with --classic
+        - astral-uv
+        # - chezmoi
+        - gh
+      new: # snap packages without --classic

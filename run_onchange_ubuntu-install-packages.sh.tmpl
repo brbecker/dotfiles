@@ -1,0 +1,15 @@
+{{- if (and (eq .chezmoi.os "linux" ) (eq .chezmoi.osRelease.id "ubuntu")) -}}
+#!/bin/bash
+
+sudo apt update
+
+{{ range .packages.ubuntu.apt -}}
+sudo apt -y install {{ . | quote }}
+{{ end }}
+{{ range .packages.ubuntu.snap.classic -}}
+sudo snap install {{ . | quote }} --classic
+{{ end }}
+{{ range .packages.ubuntu.snap.new -}}
+sudo snap install {{ . | quote }}
+{{ end -}}
+{{ end -}}
