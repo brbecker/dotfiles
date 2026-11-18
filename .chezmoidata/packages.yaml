@@ -1,8 +1,14 @@
 packages:
   darwin:
-    brews:
+    brews: # CLI tools (brews, aka formulae)
     # - chezmoi
+    - curl
+    - gh
     - git
-    casks:
+    - jq
+    - tree
+    casks: # GUI apps (casks)
+    - ghostty
     - keepassxc
     - visual-studio-code
+    - webex
