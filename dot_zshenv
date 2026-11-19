@@ -1,0 +1,26 @@
+# .zshenv
+#
+# The order that zsh sources its configuration files is as follows:
+# 1. /etc/zshenv (always)
+# 2. $ZDOTDIR/.zshenv (if $ZDOTDIR is not set or is set to $HOME, THIS FILE)
+# 3. /etc/zprofile (if the shell is a login shell)
+# 4. $ZDOTDIR/.zprofile (if the shell is a login shell)
+# 5. /etc/zshrc (if the shell is an interactive shell)
+# 6. $ZDOTDIR/.zshrc (if the shell is an interactive shell)
+# 7. /etc/zlogin (if the shell is a login shell)
+# 8. $ZDOTDIR/.zlogin (if the shell is a login shell)
+
+# This file is sourced first (though, after /etc/zshenv) for all zsh processes, including non-interactive shells.  It is sourced before .zshrc and .zprofile.
+#
+# This configuration was initially inspired by https://www.youtube.com/watch?v=1jE7rCvByHg and https://github.com/radleylewis/zsh.
+
+if  [[ -z "$XDG_CONFIG_HOME" ]]; then
+  export XDG_CONFIG_HOME="$HOME/.config"
+fi
+
+if [[ -d "$XDG_CONFIG_HOME/zsh" ]]; then
+  export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+  if [[ -f "$ZDOTDIR/.zshenv" ]]; then
+    source "$ZDOTDIR/.zshenv"
+  fi
+fi

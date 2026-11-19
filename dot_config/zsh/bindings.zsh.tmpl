@@ -1,0 +1,13 @@
+# bindings.zsh
+
+# Ctrl+F -> fzf file picker (no hidden files)
+bindkey '^F' _fzf_file_no_hidden
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Opt+C -> fzf directory picker (normally Alt-C, but Mac makes that a cedilla)
+bindkey "ç" fzf-cd-widget
+{{ end -}}
+
+# Up/Down -> history search by substring (^[[A/^[[B are up/down arrow escape codes)
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down

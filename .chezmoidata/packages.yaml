@@ -1,23 +1,39 @@
 packages:
   darwin:
+    taps: # Homebrew taps
     brews: # CLI tools (brews, aka formulae)
+      - bat
       # - chezmoi
       - curl
+      - eza
+      - fd
+      - fzf
       - gh
       - git
       - jq
-      - tree
+      - ripgrep
+      - starship
+      - zoxide
     casks: # GUI apps (casks)
+      - font-fira-code-nerd-font
       - ghostty
       - keepassxc
       - visual-studio-code
       - webex
   ubuntu:
+    # TODO: how to install Fira Code Nerd Font on Ubuntu?
     apt: # apt packages
+      - bat # installs bat as batcat
       - curl
+      - eza
+      - fd-find # installs fd as fdfind
+      - fzf
       - git
       - jq
-      - tree
+      - ripgrep
+      - starship
+      - zoxide
+      - zsh
     snap:
       classic: # snap packages with --classic
         - astral-uv
